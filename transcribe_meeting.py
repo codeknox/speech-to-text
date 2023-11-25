@@ -1,4 +1,5 @@
-from transformers import WhisperTokenizer, WhisperForConditionalGeneration
+from transformers import WhisperTokenizer, WhisperForConditionalGeneration, logging
+logging.set_verbosity_error()
 from pydub import AudioSegment
 import torchaudio
 import io
