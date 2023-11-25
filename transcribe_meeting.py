@@ -29,8 +29,8 @@ def transcribe_audio(audio_path):
     speech, sample_rate = torchaudio.load(buffer, format="wav")
     print("Audio file loaded.")
 
-    print("Preprocessing the audio for the model...")
-    input_values = model.preprocess(speech)
+    print("Tokenizing the audio for the model...")
+    input_values = tokenizer(speech, return_tensors="pt").input_values
     print("Preprocessing completed.")
     print("Tokenization completed.")
 
