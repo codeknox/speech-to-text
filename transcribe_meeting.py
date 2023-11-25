@@ -33,10 +33,11 @@ def transcribe_audio(audio_path):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python transcribe_meeting.py <path_to_wav_file>")
-        sys.exit(1)
+        # print("Usage: python transcribe_meeting.py <path_to_wav_file>")
+        audio_path = "/Users/sibagy/Downloads/Meeting1.wav"
+    else:
+        audio_path = sys.argv[1]
 
-    audio_path = sys.argv[1]
     print("Starting transcription process...")
     transcription = transcribe_audio(audio_path)
     print("Transcription process completed.")
