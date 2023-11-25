@@ -17,13 +17,6 @@ def transcribe_audio(audio_path):
         print("If the problem persists, check for any local directories that might conflict with the model name.")
         sys.exit(1)
 
-    print("Converting m4a file to WAV format...")
-    audio_segment = AudioSegment.from_file(audio_path, format="m4a")
-    audio_segment = audio_segment.set_frame_rate(16000).set_channels(1)  # Set sample rate to 16kHz and mono channel
-    buffer = io.BytesIO()
-    audio_segment.export(buffer, format="wav")
-    buffer.seek(0)
-    print("Conversion to WAV completed.")
 
     print("Loading the WAV audio file...")
     speech, sample_rate = torchaudio.load(buffer, format="wav").numpy()
