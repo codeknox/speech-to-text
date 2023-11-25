@@ -10,26 +10,31 @@ def transcribe_audio(audio_path):
     tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-large-v3")
     model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-large-v3")
 
-    # Convert m4a file to wav
+    print("Converting m4a file to WAV format...")
     audio_segment = AudioSegment.from_file(audio_path, format="m4a")
     audio_segment = audio_segment.set_frame_rate(16000).set_channels(1)  # Set sample rate to 16kHz and mono channel
     buffer = io.BytesIO()
     audio_segment.export(buffer, format="wav")
     buffer.seek(0)
+    print("Conversion to WAV completed.")
 
-    # Load the audio file
+    print("Loading the WAV audio file...")
     speech, sample_rate = torchaudio.load(buffer, format="wav")
+    print("Audio file loaded.")
 
-    # Tokenize the raw audio
+    print("Tokenizing the audio...")
     input_values = tokenizer(speech, return_tensors="pt").input_values
+    print("Tokenization completed.")
 
-    # Generate the transcription
+    print("Generating transcription...")
     with torch.no_grad():
         logits = model(input_values).logits
+    print("Transcription generation completed.")
 
-    # Decode the predicted ids
+    print("Decoding the transcription...")
     predicted_ids = torch.argmax(logits, dim=-1)
     transcription = tokenizer.decode(predicted_ids[0])
+    print("Decoding completed.")
 
     return transcription
 
@@ -39,5 +44,8 @@ if __name__ == "__main__":
         sys.exit(1)
 
     audio_path = sys.argv[1]
+    print("Starting transcription process...")
     transcription = transcribe_audio(audio_path)
+    print("Transcription process completed.")
+    print("Transcription:")
     print(transcription)
