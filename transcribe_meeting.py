@@ -8,8 +8,8 @@ import sys
 def transcribe_audio(audio_path):
     # Load the tokenizer and model with error handling
     try:
-        tokenizer = WhisperTokenizer.from_pretrained("facebook/wav2vec2-large-960h-lv60-self")
-        model = WhisperForConditionalGeneration.from_pretrained("facebook/wav2vec2-large-960h-lv60-self")
+        tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-large-v3")
+        model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-large-v3")
     except OSError as e:
         print("An error occurred while loading the Whisper tokenizer or model:")
         print(e)
