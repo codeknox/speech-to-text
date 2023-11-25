@@ -20,11 +20,10 @@ def transcribe_audio(audio_path):
 
     print("Loading the WAV audio file...")
     speech, sample_rate = torchaudio.load(audio_path)
-    speech = speech.numpy()
     print("Audio file loaded.")
 
     print("Tokenizing and generating transcription...")
-    inputs = tokenizer(speech, return_tensors="pt", sampling_rate=sample_rate)
+    inputs = tokenizer(speech.squeeze().tolist(), return_tensors="pt", sampling_rate=sample_rate)
     with torch.no_grad():
         generated_ids = model.generate(**inputs)
     transcription = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
