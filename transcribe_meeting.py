@@ -30,7 +30,9 @@ def transcribe_audio(audio_path):
     print("Generating transcription...")
     with torch.no_grad():
         logits = model(speech).logits
+    print("Generating transcription, logits done...")
     predicted_ids = torch.argmax(logits, dim=-1)
+    print("Generating transcription, going to decode...")
     transcription = tokenizer.decode(predicted_ids[0])
     print("Decoding completed.")
 
