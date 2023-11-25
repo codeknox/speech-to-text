@@ -19,7 +19,8 @@ def transcribe_audio(audio_path):
 
 
     print("Loading the WAV audio file...")
-    speech, sample_rate = torchaudio.load(audio_path).numpy()
+    speech, sample_rate = torchaudio.load(audio_path)
+    speech = speech.numpy()
     print("Audio file loaded.")
 
     print("Tokenizing and generating transcription...")
