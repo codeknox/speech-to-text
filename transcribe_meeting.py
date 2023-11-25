@@ -6,9 +6,16 @@ import torch
 import sys
 
 def transcribe_audio(audio_path):
-    # Load the tokenizer and model
-    tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-large-v3")
-    model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-large-v3")
+    # Load the tokenizer and model with error handling
+    try:
+        tokenizer = WhisperTokenizer.from_pretrained("openai/whisper-large-v3")
+        model = WhisperForConditionalGeneration.from_pretrained("openai/whisper-large-v3")
+    except OSError as e:
+        print("An error occurred while loading the Whisper tokenizer or model:")
+        print(e)
+        print("Please ensure you have an active internet connection and that the model name is correct.")
+        print("If the problem persists, check for any local directories that might conflict with the model name.")
+        sys.exit(1)
 
     print("Converting m4a file to WAV format...")
     audio_segment = AudioSegment.from_file(audio_path, format="m4a")
