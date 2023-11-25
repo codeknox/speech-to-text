@@ -24,9 +24,8 @@ def transcribe_audio(audio_path):
     print("Tokenizing and generating transcription...")
     inputs = tokenizer(speech.squeeze(), return_tensors="pt", padding="longest", truncation=True, max_length=512)
     with torch.no_grad():
-        logits = model(inputs.input_values, attention_mask=inputs.attention_mask).logits
-    predicted_ids = torch.argmax(logits, dim=-1)
-    transcription = tokenizer.batch_decode(predicted_ids)[0]
+        generated_ids = model.generate(**inputs)
+    transcription = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
     print("Decoding completed.")
 
     return transcription
