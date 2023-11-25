@@ -19,9 +19,9 @@ def transcribe_audio(audio_path):
 
     print("Loading the WAV audio file...")
     speech, sample_rate = torchaudio.load(audio_path)
-    # Convert mono audio to stereo
-    if speech.shape[0] == 1:
-        speech = torch.cat((speech, speech), 0)
+    # Convert stereo audio to 128-channel audio
+    if speech.shape[0] == 2:
+        speech = speech.repeat(64, 1)
     print("Audio file loaded.")
 
     print("Generating transcription...")
