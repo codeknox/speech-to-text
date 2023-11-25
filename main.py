@@ -1,1 +1,1 @@
-pip show torch transformers
+!pip install torch transformers
